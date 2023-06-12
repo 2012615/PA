@@ -221,7 +221,7 @@ static int cmd_info(char*args)
 	else if(opt=='w')
 	{
 		//todo:print the info of watchpoints
-
+    WPrint();
 	}
 
 	else
@@ -235,7 +235,7 @@ static int cmd_info(char*args)
 
 static int cmd_w(char*args)
 {
-
+  new_wp(args);
   return 0;
 }
 
@@ -249,7 +249,7 @@ static int cmd_d(char*args)
     return 0;
   }
 
-
+  free_wp(No);
   return 0;
 }
 
