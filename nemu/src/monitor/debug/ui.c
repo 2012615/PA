@@ -38,6 +38,17 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args);
+
+static int cmd_info(char *args);
+
+static int cmd_p(char *args);
+
+static int cmd_d(char*args);
+
+static int cmd_x(char*args);
+
+static int cmd_w(char*args);
 static struct {
   char *name;
   char *description;
@@ -48,7 +59,12 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-
+{ "si", "args: [N]; to run N steps", cmd_si},
+  { "info", "args: r/w; print the info of registers or watchpoints", cmd_info},
+  { "x","[N] and [expr]; to scan the memory from expr to expr+N", cmd_x},
+  { "p", "args:expr; to calculate the value of expr", cmd_p},
+  { "d", "args:N; to delete the watchpoint whose NO is N", cmd_d},
+  { "w", "args:expr; to set up a new WatchPoint", cmd_w}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
