@@ -31,11 +31,11 @@ static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
 }
-
+//continue the processing
 static int cmd_q(char *args) {
   return -1;
 }
-
+//quit the debugger
 static int cmd_help(char *args);
 
 static int cmd_si(char *args);
@@ -49,17 +49,20 @@ static int cmd_d(char*args);
 static int cmd_x(char*args);
 
 static int cmd_w(char*args);
+
+
 static struct {
   char *name;
   char *description;
   int (*handler) (char *);
 } cmd_table [] = {
-  { "help", "Display informations about all supported commands", cmd_help },
+  { "help", "Display informations about all supported commands", cmd_help},
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
 
   /* TODO: Add more commands */
-{ "si", "args: [N]; to run N steps", cmd_si},
+  
+  { "si", "args: [N]; to run N steps", cmd_si},
   { "info", "args: r/w; print the info of registers or watchpoints", cmd_info},
   { "x","[N] and [expr]; to scan the memory from expr to expr+N", cmd_x},
   { "p", "args:expr; to calculate the value of expr", cmd_p},
@@ -91,6 +94,7 @@ static int cmd_help(char *args) {
   }
   return 0;
 }
+
 //not sure!!!!
 static int cmd_si(char* args) //use ssanf to read from the param (str,cond,str)
 {
@@ -112,6 +116,7 @@ static int cmd_si(char* args) //use ssanf to read from the param (str,cond,str)
 	return 0;
 }
 //not sure!!1
+
 static int cmd_p(char *args)
 {
   bool success;
@@ -248,7 +253,6 @@ static int cmd_d(char*args)
   return 0;
 }
 
-
 void ui_mainloop(int is_batch_mode) {
   if (is_batch_mode) {
     cmd_c(NULL);
@@ -258,7 +262,6 @@ void ui_mainloop(int is_batch_mode) {
   while (1) {
     char *str = rl_gets();
     char *str_end = str + strlen(str);
-
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
     if (cmd == NULL) { continue; }
@@ -287,3 +290,4 @@ void ui_mainloop(int is_batch_mode) {
     if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
   }
 }
+
