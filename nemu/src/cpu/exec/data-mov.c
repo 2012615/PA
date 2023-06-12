@@ -6,54 +6,86 @@ make_EHelper(mov) {
 }
 
 make_EHelper(push) {
-  TODO();
+ // TODO();
+
+  rtl_push(&id_dest->val);    //push the val of dest reg
 
   print_asm_template1(push);
 }
 
-make_EHelper(pop) {
-  TODO();
+make_EHelper(pop) {   //pop the value and get the val to store in a reg
+  //TODO();
+  rtl_pop(&t2);
+  operand_write(id_dest,&t2);  
 
   print_asm_template1(pop);
 }
 
 make_EHelper(pusha) {
-  TODO();
+  //TODO();
+  t0 = cpu.esp;
+  rtl_push(&cpu.eax);
+  rtl_push(&cpu.ecx);
+  rtl_push(&cpu.edx);
+  rtl_push(&cpu.ebx);
+  rtl_push(&t0);
+  rtl_push(&cpu.ebp);
+  rtl_push(&cpu.esi);
+  rtl_push(&cpu.edi);
 
   print_asm("pusha");
 }
 
 make_EHelper(popa) {
-  TODO();
+  //TODO();
+  rtl_pop(&cpu.edi);
+  rtl_pop(&cpu.esi);
+  rtl_pop(&cpu.ebp);
+  rtl_pop(&t0);
+  rtl_pop(&cpu.ebx);
+  rtl_pop(&cpu.edx);
+  rtl_pop(&cpu.ecx);
+  rtl_pop(&cpu.eax);
 
   print_asm("popa");
 }
 
-make_EHelper(leave) {
-  TODO();
+make_EHelper(leave) {  //end a process
+//  TODO();
+  rtl_mv(&cpu.esp,&cpu.ebp);
+  rtl_pop(&cpu.ebp);
 
   print_asm("leave");
 }
 
-make_EHelper(cltd) {
+make_EHelper(cltd) {  //16-32
   if (decoding.is_operand_size_16) {
-    TODO();
+    //TODO();
+    rtl_lr_w(&t0,R_AX);
+    rtl_sext(&t0,&t0,2); //lower 16  bits
+    rtl_sari(&t0,&t0,31);
+    rtl_sr_w(R_DX,&t0);//
   }
   else {
-    TODO();
+    //TODO();
+    rtl_sari(&cpu.edx,&cpu.eax,31);
   }
 
   print_asm(decoding.is_operand_size_16 ? "cwtl" : "cltd");
 }
 
-make_EHelper(cwtl) {
+make_EHelper(cwtl) {    //32-64
   if (decoding.is_operand_size_16) {
-    TODO();
+    //TODO();
+    panic("Error! Size cannot be 16!");
+
   }
   else {
-    TODO();
+    //TODO();
+    rtl_lr_w(&t0, R_AX);
+    rtl_sext(&t0, &t0, 2);
+    rtl_sr_l(R_EAX, &t0);//?????
   }
-
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");
 }
 
@@ -75,3 +107,4 @@ make_EHelper(lea) {
   operand_write(id_dest, &t2);
   print_asm_template2(lea);
 }
+
