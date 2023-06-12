@@ -91,7 +91,27 @@ static int cmd_help(char *args) {
   }
   return 0;
 }
-
+//not sure!!!!
+static int cmd_si(char* args) //use ssanf to read from the param (str,cond,str)
+{
+	uint64_t steps=0;
+	if(args==NULL)
+	{
+		steps=1;
+	}
+	else
+	{
+		int flag=sscanf(args,"%lu",&steps);  /*llu means a unsigned long integer(64 bits)*/
+		if(flag<=0)
+		{
+			printf("wrong param!\n");
+			return 0;
+		}
+	}
+	cpu_exec(steps);
+	return 0;
+}
+//not sure!!1
 void ui_mainloop(int is_batch_mode) {
   if (is_batch_mode) {
     cmd_c(NULL);
