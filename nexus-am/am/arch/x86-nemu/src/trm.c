@@ -2,7 +2,7 @@
 #include <x86.h>
 
 // Define this macro after serial has been implemented
-//#define HAS_SERIAL
+#define HAS_SERIAL
 
 #define SERIAL_PORT 0x3f8
 
@@ -46,3 +46,4 @@ void _trm_init() {
   int ret = main();
   _halt(ret);
 }
+
