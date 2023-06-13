@@ -36,3 +36,4 @@ void init_vga() {
   vmem = add_mmio_map(VMEM, 0x80000, vga_vmem_io_handler);
 }
 #endif	/* HAS_IOE */
+

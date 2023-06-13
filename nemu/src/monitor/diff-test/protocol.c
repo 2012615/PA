@@ -312,3 +312,4 @@ const char* gdb_start_noack(struct gdb_conn *conn) {
     conn->ack = false;
   return ok ? "OK" : "";
 }
+

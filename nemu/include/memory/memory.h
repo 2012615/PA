@@ -16,3 +16,4 @@ void vaddr_write(vaddr_t, int, uint32_t);
 void paddr_write(paddr_t, int, uint32_t);
 
 #endif
+

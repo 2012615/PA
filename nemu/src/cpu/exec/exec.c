@@ -105,8 +105,9 @@ Opcodes determined by bits 5,4,3 of modR/M byte:
                EX(jmp_rm), EMPTY, EX(push), EMPTY)  //why rm????
 
     /* 0x0f 0x01*/
+    //PA3-->lidt
     make_group(gp7,
-               EMPTY, EMPTY, EMPTY, EMPTY,
+               EMPTY, EMPTY, EMPTY, IDEX(lidt_a,lidt),
                EMPTY, EMPTY, EMPTY, EMPTY)
 
     /* TODO: Add more instructions!!! */
@@ -225,7 +226,7 @@ Opcodes determined by bits 5,4,3 of modR/M byte:
         /* 0xc0 */ IDEXW(gp2_Ib2E, gp2, 1), IDEX(gp2_Ib2E, gp2), EMPTY, EX(ret),
         /* 0xc4 */ EMPTY, EMPTY, IDEXW(mov_I2E, mov, 1), IDEX(mov_I2E, mov),
         /* 0xc8 */ EMPTY, EX(leave), EMPTY, EMPTY,
-        /* 0xcc */ EMPTY, EMPTY, EMPTY, EMPTY,
+        /* 0xcc */ EMPTY, IDEXW(I,int,1), EMPTY, EX(iret),
         /* 0xd0 */ IDEXW(gp2_1_E, gp2, 1), IDEX(gp2_1_E, gp2), IDEXW(gp2_cl2E, gp2, 1), IDEX(gp2_cl2E, gp2),
         /* 0xd4 */ EMPTY, EMPTY, EX(nemu_trap), EMPTY,
         /* 0xd8 */ EMPTY, EMPTY, EMPTY, EMPTY,

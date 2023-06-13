@@ -33,7 +33,16 @@ typedef struct {
   /* In NEMU, rtlreg_t is exactly uint32_t. This makes RTL instructions
    * in PA2 able to directly access these registers.
    */
-  
+
+  //IDTR
+  struct IDTR
+  {
+    uint32_t base;
+    uint32_t limit;
+  }idtr;
+
+  //cs register--> code segment
+  rtlreg_t cs;  
 
   vaddr_t eip;
 

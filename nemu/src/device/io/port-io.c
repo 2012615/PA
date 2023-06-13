@@ -12,6 +12,7 @@ typedef struct {
   ioaddr_t high;
   pio_callback_t callback;
 } PIO_t;
+//to record a port I/O's relationship
 
 static PIO_t maps[NR_MAP];
 static int nr_map = 0;
@@ -53,4 +54,5 @@ void pio_write(ioaddr_t addr, int len, uint32_t data) {
   memcpy(pio_space + addr, &data, len);
   pio_callback(addr, len, true);
 }
+
 

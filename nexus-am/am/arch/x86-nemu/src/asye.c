@@ -51,3 +51,4 @@ void _trap() {
 int _istatus(int enable) {
   return 0;
 }
+

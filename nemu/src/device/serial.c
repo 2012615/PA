@@ -27,3 +27,4 @@ void init_serial() {
   serial_port_base = add_pio_map(SERIAL_PORT, 8, serial_io_handler);
   serial_port_base[LSR_OFFSET] = 0x20; /* the status is always free */
 }
+

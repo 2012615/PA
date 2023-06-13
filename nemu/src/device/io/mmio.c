@@ -68,3 +68,4 @@ void mmio_write(paddr_t addr, int len, uint32_t data, int map_NO) {
 
   maps[map_NO].callback(addr, len, true);
 }
+

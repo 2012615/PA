@@ -104,3 +104,4 @@ bool gdb_si(void) {
 void gdb_exit(void) {
   gdb_end(conn);
 }
+

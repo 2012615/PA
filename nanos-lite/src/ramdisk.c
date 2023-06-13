@@ -25,7 +25,7 @@ void init_ramdisk() {
   Log("ramdisk info: start = %p, end = %p, size = %d bytes",
       &ramdisk_start, &ramdisk_end, RAMDISK_SIZE);
 }
-
+//return the size --byte
 size_t get_ramdisk_size() {
   return RAMDISK_SIZE;
 }
