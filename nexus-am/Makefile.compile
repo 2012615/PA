@@ -84,4 +84,3 @@ am:
 	@$(MAKE) -C $(AM_HOME)
 $(sort $(LIBS)): %:
 	-@$(MAKE) -C $(AM_HOME)/libs/$*
-
