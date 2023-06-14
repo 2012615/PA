@@ -64,6 +64,12 @@ typedef struct {
     unsigned int:20;
   }eflags;
 
+  //CR0 and CR3 registers
+  uint32_t CR0;
+  uint32_t CR3;
+
+  //hardware interrupting
+  bool INTR;
 
   //origin value of eflags:  EFLAGS             =00000002H
 } CPU_state;
@@ -94,4 +100,3 @@ static inline const char* reg_name(int index, int width) {
 }
 
 #endif
-
