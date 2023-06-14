@@ -32,8 +32,8 @@ int main() {
   //((void (*)(void))entry)();
   extern void load_prog(const char* filename);
   //execute mutiple process
-  //load_prog("/bin/dummy");
-  load_prog("/bin/hello");
+  load_prog("/bin/dummy");
+  //load_prog("/bin/hello");
 
   _trap();
 
