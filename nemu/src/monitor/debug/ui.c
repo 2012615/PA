@@ -215,6 +215,7 @@ static int cmd_info(char*args)
 		//cr3:PDBR  the base address of the PD
 		/*printf("CR0 0x%x\n",cpu.CR0);
 		printf("CR3 0x%x\n",cpu.CR3);*/
+    printf("cr0=0x%x,cr3=0x%x\n",cpu.CR0,cpu.CR3);
 		return 0;
 	}
 
