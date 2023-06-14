@@ -28,7 +28,7 @@ int main() {
   init_irq();
 #endif
   init_fs();
-  uint32_t entry = loader(NULL, "/bin/bmptest");
+  uint32_t entry = loader(NULL, "/bin/bmp");
   ((void (*)(void))entry)();
 
   panic("Should not reach here");
