@@ -15,9 +15,9 @@ void load_prog(const char *filename) {
   uintptr_t entry = loader(&pcb[i].as, filename);
 
   // TODO: remove the following three lines after you have implemented _umake()
-  _switch(&pcb[i].as);
-  current = &pcb[i];
-  ((void (*)(void))entry)();
+  //_switch(&pcb[i].as);
+  //current = &pcb[i];
+  //((void (*)(void))entry)();
 
   _Area stack;
   stack.start = pcb[i].stack;
@@ -27,5 +27,40 @@ void load_prog(const char *filename) {
 }
 
 _RegSet* schedule(_RegSet *prev) {
-  return NULL;
+  //save the context pointer
+  if(current!=NULL)
+  {
+    current->tf=prev;
+  }
+
+  //when we execute 2 processes, the xianjian will be very slow.
+  //so we need to set a 'level', can be replaced by the time that process
+  //has been executed, the xianjian will get more chances.
+  static int num=0;
+  static const int frequency=1000;
+
+  if(current==&pcb[0])
+  {
+    num++;
+  }  
+  else
+  {
+    current=&pcb[0];//xianjian 
+  }
+
+
+  if(num==frequency)
+  {
+    current=&pcb[1];
+    num=0;
+  }
+
+
+  //select pcb[0] as the new process
+  //current =(current==&pcb[0]? &pcb[1] : &pcb[0]);
+
+  //Log("ptr=0x%x\n",(uint32_t)current->as.ptr);
+
+  _switch(&current->as); //switch the addr space
+  return current->tf; //return the new process's context
 }
