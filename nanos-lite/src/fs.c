@@ -1,8 +1,4 @@
 #include "fs.h"
-#define SYSCALL_ARG1( r ) r−>eax
-#define SYSCALL_ARG2( r ) r−>ebx
-#define SYSCALL_ARG3( r ) r−>ecx
-#define SYSCALL_ARG4( r ) r−>edx
 /*
 in pa, the size and position of each file is unchangeable
 the number of files is also a constant value
