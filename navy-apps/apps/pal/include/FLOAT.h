@@ -5,24 +5,56 @@
 
 typedef int FLOAT;
 
+/*
+31 30 16 0
++----+-------------------+--------------------+
+|sign| integer | fraction |
++----+-------------------+--------------------+
+
+0-pos
+1-minus
+THE STRUCTRE OF FLOAT
+*/
+
 static inline int F2int(FLOAT a) {
-  assert(0);
-  return 0;
+  //assert(0);
+  //return 0;
+  if((a&0x80000000)==0) //pos
+  {
+    return a>>16;
+  }
+  else//minus-->get pos first
+  {
+    return -((-a)>>16);
+  }
 }
 
 static inline FLOAT int2F(int a) {
-  assert(0);
-  return 0;
+  //assert(0);
+  //return 0;
+  //get the FLOAT according the integer, e.g:1.2=1.2*2^16
+  if((a&0x80000000)==0)
+  {
+    return a<<16;
+  }
+  else
+  {
+    return -((-a)<<16);
+  }
 }
 
 static inline FLOAT F_mul_int(FLOAT a, int b) {
-  assert(0);
-  return 0;
+  //assert(0);
+  //return 0;
+  //directly mul
+  return a*b;
 }
 
 static inline FLOAT F_div_int(FLOAT a, int b) {
-  assert(0);
-  return 0;
+  //assert(0);
+  //return 0;
+  //directly
+  return a/b;
 }
 
 FLOAT f2F(float);
@@ -33,3 +65,4 @@ FLOAT Fsqrt(FLOAT);
 FLOAT Fpow(FLOAT, FLOAT);
 
 #endif
+
