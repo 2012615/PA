@@ -1,3 +1,4 @@
+#include<stdio.h>
 int init_monitor(int, char *[]);
 void ui_mainloop(int);
 
@@ -10,4 +11,3 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
-

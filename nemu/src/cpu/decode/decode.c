@@ -325,4 +325,18 @@ void operand_write(Operand *op, rtlreg_t* src) {
   else { assert(0); }
 }
 
+//used for cr
+make_DHelper(mov_load_cr){
+  decode_op_rm(eip,id_dest,false,id_src,false);
+  rtl_load_cr(&id_src->val,id_src->reg);
+#ifdef DEBUG
+  sprintf(id_src->str,5,"%%cr%d",id_dest->reg);
+#endif
+}
 
+make_DHelper(mov_store_cr){
+  decode_op_rm(eip,id_src,true,id_dest,false);
+#ifdef DEBUG
+  sprintf(id_src->str,5,"%%cr%d",id_dest->reg);
+#endif
+}

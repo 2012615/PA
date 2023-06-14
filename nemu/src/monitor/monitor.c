@@ -90,6 +90,10 @@ static inline void restart() {
 
   cpu.cs=8;
 
+  //initialize the CR0
+
+  cpu.CR0=0x60000011;
+
 #ifdef DIFF_TEST
   init_qemu_reg();
 #endif
@@ -148,4 +152,3 @@ int init_monitor(int argc, char *argv[]) {
 
   return is_batch_mode;
 }
-
