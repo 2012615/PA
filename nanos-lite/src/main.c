@@ -32,7 +32,7 @@ int main() {
   //((void (*)(void))entry)();
   extern void load_prog(const char* filename);
   //execute mutiple process
-  //load_prog("/bin/pal");
+  load_prog("/bin/pal");
   load_prog("/bin/hello");
 
 
