@@ -66,12 +66,82 @@ void _switch(_Protect *p) {
 }
 
 void _map(_Protect *p, void *va, void *pa) {
+  //p->ptr can get the base addr of PD
+  PDE* pgdir=(PDE*)p->ptr;
+  PTE* pgtab=NULL; 
+
+  PDE* pd=pgdir+PDX(va);
+  if(!(*pd & PTE_P))//not avaliable
+  {
+    //set a new pt
+    pgtab=(PTE*)(palloc_f());
+    *pd=(uintptr_t)pgtab|PTE_P;
+  }
+  pgtab=(PTE*)PTE_ADDR(*pd);//the base addr
+
+  PTE* pt=pgtab+PTX(va);
+  //set the value of pt index
+  *pt=(uintptr_t)pa|PTE_P;
 }
 
 void _unmap(_Protect *p, void *va) {
 }
+/*
+structure of PCB
+
+typedef union {
+  uint8_t stack[STACK_SIZE] PG_ALIGN;
+  struct {
+    _RegSet *tf;  trap frame
+    _Protect as;
+    uintptr_t cur_brk;
+    // we do not free memory, so use `max_brk' to determine when to call _map()
+    uintptr_t max_brk;
+  };
+} PCB;
+*/
+//create a scene for user porcess
+//initialize a tf whose return addr is entry; set stack frame of _strat(navy-apps/libs/libc/src/start.c)
+/*
+| |
++---------------+ <---- ustack.end
+| stack frame |
+| of _start() |
++---------------+
+| |
+| trap frame |
+| |
++---------------+ <--+
+| | |
+| | |
+| | |
+| | |
++---------------+ |
+| tf | ---+
++---------------+ <---- ustack.start
+| |
+*/
+//_start accept 3 params
 
 _RegSet *_umake(_Protect *p, _Area ustack, _Area kstack, void *entry, char *const argv[], char *const envp[]) {
-  return NULL;
-}
+  extern void* memcpy(void*, const void*, int);
+  int arg1=0;
+  char* arg2=NULL;
 
+  memcpy((void*)ustack.end - 4,  (void*)arg2, 4);
+  memcpy((void*)ustack.end - 8,  (void*)arg2, 4);
+  memcpy((void*)ustack.end - 12, (void*)arg1, 4);
+  memcpy((void*)ustack.end - 16, (void*)arg1, 4); //eip of _start
+
+  //trap frame initialize cs to 8,eflags=2, return eip is entry
+  _RegSet tf;
+  tf.cs=8;
+  tf.eip=(uintptr_t)entry;
+  tf.eflags=0x02|FL_IF;
+  
+  //the addr that saves tf
+  void* ptf = (void*)(ustack.end - 16 - sizeof(_RegSet));
+  memcpy(ptf, (void*)&tf, sizeof(_RegSet));
+
+  return (_RegSet*)ptf;
+}

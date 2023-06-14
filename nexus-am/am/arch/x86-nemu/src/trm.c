@@ -46,4 +46,3 @@ void _trm_init() {
   int ret = main();
   _halt(ret);
 }
-
